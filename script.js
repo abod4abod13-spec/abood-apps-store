@@ -1,6 +1,6 @@
-// ====================================
+// ===============================
 // شاشة الترحيب
-// ====================================
+// ===============================
 
 window.addEventListener("load", () => {
 
@@ -8,66 +8,80 @@ setTimeout(() => {
 
 const splash = document.getElementById("splash");
 
+if(splash){
+
+splash.style.transition = "1s";
+
 splash.style.opacity = "0";
 
 setTimeout(() => {
-splash.style.display = "none";
-}, 1000);
 
-}, 2500);
+splash.remove();
+
+},1000);
+
+}
+
+},2500);
 
 });
 
-// ====================================
+// ===============================
 // السنة التلقائية
-// ====================================
+// ===============================
 
-document.getElementById("year").textContent =
-new Date().getFullYear();
+const year = document.getElementById("year");
 
-// ====================================
-// البحث
-// ====================================
+if(year){
 
-const searchInput = document.getElementById("search");
+year.textContent = new Date().getFullYear();
 
-searchInput.addEventListener("keyup", () => {
+}
 
-const value = searchInput.value.toLowerCase();
+// ===============================
+// شريط التقدم
+// ===============================
 
-const cards = document.querySelectorAll(".card");
+window.addEventListener("scroll", () => {
 
-cards.forEach(card => {
+const winScroll =
+document.documentElement.scrollTop;
 
-const text = card.innerText.toLowerCase();
+const height =
+document.documentElement.scrollHeight -
+document.documentElement.clientHeight;
 
-if (text.includes(value)) {
+const scrolled =
+(winScroll / height) * 100;
 
-card.style.display = "block";
+const progress =
+document.getElementById("scrollProgress");
 
-} else {
+if(progress){
 
-card.style.display = "none";
+progress.style.width =
+scrolled + "%";
 
 }
 
 });
 
-});
-
-// ====================================
+// ===============================
 // زر العودة للأعلى
-// ====================================
+// ===============================
 
-const topBtn = document.getElementById("topBtn");
+const topBtn =
+document.getElementById("topBtn");
 
 window.addEventListener("scroll", () => {
 
-if (window.scrollY > 300) {
+if(!topBtn) return;
+
+if(window.scrollY > 300){
 
 topBtn.style.display = "block";
 
-} else {
+}else{
 
 topBtn.style.display = "none";
 
@@ -75,129 +89,212 @@ topBtn.style.display = "none";
 
 });
 
+if(topBtn){
+
 topBtn.addEventListener("click", () => {
 
 window.scrollTo({
-top: 0,
-behavior: "smooth"
-});
+
+top:0,
+behavior:"smooth"
 
 });
 
-// ====================================
-// صوت الأزرار
-// ====================================
-
-function playClickSound() {
-
-const audio = new Audio(
-"https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8d0d4d8f0.mp3"
-);
-
-audio.volume = 0.3;
-
-audio.play();
+});
 
 }
 
-document.querySelectorAll(".download-btn")
-.forEach(btn => {
+// ===============================
+// البحث
+// ===============================
 
-btn.addEventListener("click", () => {
+const search =
+document.getElementById("search");
 
-playClickSound();
+if(search){
+
+search.addEventListener("input", () => {
+
+const value =
+search.value.toLowerCase();
+
+document
+.querySelectorAll(".app-card")
+.forEach(card => {
+
+const text =
+card.innerText.toLowerCase();
+
+card.style.display =
+text.includes(value)
+? "block"
+: "none";
 
 });
 
 });
 
-// ====================================
-// تأثير ظهور البطاقات
-// ====================================
+}
 
-const cards = document.querySelectorAll(".card");
+// ===============================
+// ظهور العناصر عند النزول
+// ===============================
 
-const observer = new IntersectionObserver(entries => {
+const observer =
+new IntersectionObserver(entries => {
 
 entries.forEach(entry => {
 
-if (entry.isIntersecting) {
+if(entry.isIntersecting){
 
 entry.target.style.opacity = "1";
 
-entry.target.style.transform = "translateY(0)";
+entry.target.style.transform =
+"translateY(0px)";
 
 }
 
 });
 
+},{
+threshold:0.15
 });
 
-cards.forEach(card => {
+document
+.querySelectorAll(
+".app-card,.feature-box,.stat-box,.update-box,.developer-card,.featured-card"
+)
+.forEach(item => {
 
-card.style.opacity = "0";
+item.style.opacity = "0";
 
-card.style.transform = "translateY(40px)";
-card.style.transition = "0.8s";
+item.style.transform =
+"translateY(40px)";
 
-observer.observe(card);
+item.style.transition =
+".8s ease";
+
+observer.observe(item);
 
 });
 
-// ====================================
+// ===============================
+// تأثير الضغط على الأزرار
+// ===============================
+
+document
+.querySelectorAll(
+".download-btn,.btn-primary,.btn-secondary"
+)
+.forEach(btn => {
+
+btn.addEventListener("mousedown", () => {
+
+btn.style.transform =
+"scale(.96)";
+
+});
+
+btn.addEventListener("mouseup", () => {
+
+btn.style.transform = "";
+
+});
+
+});
+
+// ===============================
+// أصوات الأزرار
+// ===============================
+
+function playClick(){
+
+const audio =
+document.getElementById("clickSound");
+
+if(audio){
+
+audio.currentTime = 0;
+
+audio.play().catch(()=>{});
+
+}
+
+}
+
+document
+.querySelectorAll(
+".download-btn,.btn-primary,.btn-secondary"
+)
+.forEach(btn => {
+
+btn.addEventListener(
+"click",
+playClick
+);
+
+});
+
+// ===============================
 // عداد التحميلات المحلي
-// ====================================
+// ===============================
 
-document.querySelectorAll(".download-btn")
-.forEach((btn, index) => {
+document
+.querySelectorAll(".download-btn")
+.forEach((btn,index) => {
 
-const key = "downloads_" + index;
+const key =
+"app_downloads_" + index;
 
-let count = localStorage.getItem(key);
+let count =
+localStorage.getItem(key) || 0;
 
-if (!count) {
+const counter =
+document.createElement("div");
 
-localStorage.setItem(key, 0);
+counter.className =
+"download-counter";
 
-count = 0;
+counter.innerHTML =
+"⬇ التحميلات: " + count;
+
+counter.style.marginTop =
+"12px";
+
+counter.style.opacity =
+".8";
+
+btn.parentElement
+.appendChild(counter);
+
+btn.addEventListener(
+"click",
+() => {
+
+count++;
+
+localStorage.setItem(
+key,
+count
+);
+
+counter.innerHTML =
+"⬇ التحميلات: " + count;
 
 }
-
-const counter = document.createElement("div");
-
-counter.style.marginTop = "10px";
-counter.style.opacity = ".8";
-counter.style.fontSize = ".9rem";
-
-counter.textContent =
-"التحميلات: " + count;
-
-btn.parentElement.appendChild(counter);
-
-btn.addEventListener("click", () => {
-
-let current =
-parseInt(localStorage.getItem(key));
-
-current++;
-
-localStorage.setItem(key, current);
-
-counter.textContent =
-"التحميلات: " + current;
+);
 
 });
 
-});
+// ===============================
+// إصلاح الصور التالفة
+// ===============================
 
-// ====================================
-// معالجة الصور التالفة
-// ====================================
-
-document.querySelectorAll("img")
+document
+.querySelectorAll("img")
 .forEach(img => {
 
-img.onerror = function() {
+img.onerror = function(){
 
 this.src =
 "https://via.placeholder.com/512x512?text=App";
@@ -206,32 +303,62 @@ this.src =
 
 });
 
-// ====================================
-// رسالة ترحيب
-// ====================================
+// ===============================
+// عداد الزوار المحلي
+// ===============================
 
-setTimeout(() => {
+let visits =
+localStorage.getItem(
+"abood_visits"
+) || 0;
 
-console.log(
-"Welcome To Abood Apps Store 🚀"
+visits++;
+
+localStorage.setItem(
+"abood_visits",
+visits
 );
 
-}, 3000);
+console.log(
+"Visitors:",
+visits
+);
 
-// ====================================
+// ===============================
+// رسالة ترحيب
+// ===============================
+
+console.log(
+"🚀 Welcome To Abood Apps Store"
+);
+
+// ===============================
 // تأثير بسيط للماوس
-// ====================================
+// ===============================
 
-document.addEventListener("mousemove", e => {
+document.addEventListener(
+"mousemove",
+e => {
 
-document.documentElement.style.setProperty(
+document.documentElement
+.style.setProperty(
 "--mouse-x",
 e.clientX + "px"
 );
 
-document.documentElement.style.setProperty(
+document.documentElement
+.style.setProperty(
 "--mouse-y",
 e.clientY + "px"
 );
 
-});
+}
+);
+
+// ===============================
+// جاهزية كاملة
+// ===============================
+
+console.log(
+"✅ Website Loaded Successfully"
+);
