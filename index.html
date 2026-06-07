@@ -7,324 +7,11 @@
     <meta name="description" content="Abood Apps Store - تحميل تطبيقات عبدالله">
     <meta name="theme-color" content="#0a0f1c">
     
+    <link rel="stylesheet" href="style.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg-color: #0a0f1c;
-            --card-bg: #131b2e;
-            --text-color: #ffffff;
-            --text-muted: #8b9bb4;
-            --primary-color: #3b82f6;
-            --primary-hover: #1d4ed8;
-            --accent-color: #10b981;
-            --premium-color: #f59e0b;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-            padding-bottom: 60px;
-        }
-
-        /* --- شريط التقدم العلوي --- */
-        #scrollProgress {
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            width: 0%;
-            z-index: 10000;
-            transition: width 0.1s ease;
-        }
-
-        /* --- شاشة الترحيب (Splash Screen) --- */
-        #splash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 0.8s ease, visibility 0.8s;
-        }
-
-        .splash-content {
-            text-align: center;
-        }
-
-        .logo-circle {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
-        }
-
-        .loading-bar {
-            width: 200px;
-            height: 6px;
-            background-color: #1e293b;
-            border-radius: 3px;
-            margin: 20px auto 0;
-            overflow: hidden;
-        }
-
-        .loading-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            animation: fillLoading 2.2s forwards ease-in-out;
-        }
-
-        @keyframes fillLoading {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
-        /* --- زر العودة للأعلى --- */
-        #topBtn {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 16px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: none;
-            z-index: 99;
-            font-size: 18px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transition: 0.3s;
-        }
-        #topBtn:hover { background-color: var(--primary-hover); }
-
-        /* --- الهيدر والقائمة --- */
-        header {
-            background-color: rgba(19, 27, 46, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 90;
-            border-bottom: 1px solid #1e293b;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px 20px;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: 800;
-            color: #fff;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            margin-right: 20px;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover { color: var(--primary-color); }
-
-        /* --- القسم الرئيسي (Hero) --- */
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-            background: radial-gradient(circle at top, #1e293b 0%, var(--bg-color) 70%);
-        }
-
-        .hero h1 { font-size: 42px; margin-bottom: 15px; font-weight: 900; }
-        .hero p { color: var(--text-muted); font-size: 18px; margin-bottom: 30px; }
-
-        .hero-buttons .btn-primary, .hero-buttons .btn-secondary {
-            display: inline-block;
-            padding: 12px 30px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            margin: 5px;
-            transition: transform 0.1s, background-color 0.3s;
-        }
-
-        .btn-primary { background-color: var(--primary-color); color: #fff; }
-        .btn-primary:hover { background-color: var(--primary-hover); }
-        .btn-secondary { background-color: #1e293b; color: #fff; }
-        .btn-secondary:hover { background-color: #334155; }
-
-        /* --- الإحصائيات --- */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            max-width: 1000px;
-            margin: -30px auto 40px;
-            padding: 0 20px;
-        }
-
-        .stat-box {
-            background-color: var(--card-bg);
-            border: 1px solid #1e293b;
-            padding: 20px 40px;
-            border-radius: 12px;
-            text-align: center;
-            min-width: 180px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        .stat-box h2 { color: var(--primary-color); font-weight: 800; }
-        .stat-box p { color: var(--text-muted); font-size: 14px; }
-
-        /* --- قسم البحث --- */
-        .search-section { text-align: center; margin-bottom: 40px; padding: 0 20px; }
-        #search {
-            width: 100%;
-            max-width: 500px;
-            padding: 14px 20px;
-            border-radius: 8px;
-            border: 1px solid #1e293b;
-            background-color: var(--card-bg);
-            color: white;
-            font-size: 16px;
-            outline: none;
-            transition: 0.3s;
-        }
-        #search:focus { border-color: var(--primary-color); box-shadow: 0 0 8px rgba(59, 130, 246, 0.4); }
-
-        /* --- التطبيق المميز --- */
-        .featured { max-width: 1000px; margin: 0 auto 50px; padding: 0 20px; }
-        .featured-card {
-            background: linear-gradient(135deg, #1e293b, var(--card-bg));
-            border: 2px solid var(--primary-color);
-            border-radius: 16px;
-            padding: 30px;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-        .featured-card img { width: 120px; height: 120px; border-radius: 24px; object-fit: cover; }
-        .featured-info { flex: 1; }
-        .featured-badge { background-color: var(--primary-color); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; }
-        .featured-info h2 { margin: 10px 0; font-weight: 800; }
-        .featured-info p { color: var(--text-muted); margin-bottom: 20px; }
-
-        /* --- شبكة التطبيقات --- */
-        .apps {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto 60px;
-            padding: 0 20px;
-        }
-
-        .app-card {
-            background-color: var(--card-bg);
-            border: 1px solid #1e293b;
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
-
-        .app-card img { width: 90px; height: 90px; border-radius: 20px; margin-bottom: 15px; object-fit: cover; }
-        .app-card h2 { font-size: 20px; margin-bottom: 8px; font-weight: 700; }
-        .app-card p { color: var(--text-muted); font-size: 14px; margin-bottom: 15px; flex-grow: 1; }
-
-        .badge { position: absolute; top: 15px; right: 15px; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; }
-        .badge.new { background-color: var(--accent-color); color: white; }
-        .badge.pro { background-color: var(--premium-color); color: white; }
-        .premium-card { border-color: rgba(245, 158, 11, 0.3); }
-
-        .app-info { display: flex; justify-content: space-between; width: 100%; margin-bottom: 15px; font-size: 12px; color: var(--text-muted); }
-
-        .download-btn {
-            display: block;
-            width: 100%;
-            padding: 10px 0;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 700;
-            transition: 0.3s;
-        }
-        .download-btn:hover { background-color: var(--primary-hover); }
-        .premium-btn { background-color: var(--premium-color); }
-        .premium-btn:hover { background-color: #d97706; }
-
-        /* --- المميزات والتحديثات --- */
-        .section-title { text-align: center; font-size: 28px; margin-bottom: 30px; font-weight: 800; }
-        .features { max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        
-        .feature-box {
-            background-color: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid #1e293b;
-            text-align: center;
-        }
-        .feature-box h3 { margin: 10px 0 5px; font-size: 18px; }
-        .feature-box p { color: var(--text-muted); font-size: 14px; }
-
-        .developer-section, .updates { max-width: 800px; margin: 0 auto 60px; padding: 0 20px; text-align: center; }
-        .developer-card { background-color: var(--card-bg); border: 1px solid #1e293b; padding: 30px; border-radius: 16px; }
-        .developer-avatar { width: 70px; height: 70px; background-color: #1e293b; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 28px; margin: 0 auto 15px; }
-        .developer-links { display: flex; justify-content: center; gap: 20px; margin-top: 15px; color: var(--text-muted); }
-
-        .update-box { background-color: #131b2e; border-right: 4px solid var(--accent-color); padding: 12px 20px; text-align: right; border-radius: 4px; margin-bottom: 10px; }
-
-        /* --- الفوتر --- */
-        footer { text-align: center; padding: 40px 20px; background-color: #060a12; border-top: 1px solid #1e293b; color: var(--text-muted); font-size: 14px; }
-        footer h2 { color: white; margin-bottom: 10px; }
-
-        /* الخلفية المتحركة */
-        .background { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; overflow:hidden; opacity: 0.05; }
-        .background span { position: absolute; display: block; width: 20px; height: 20px; background: white; animation: move 25s linear infinite; bottom: -150px; }
-        .background span:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
-        .background span:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
-        .background span:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
-        @keyframes move { 0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; } 100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; } }
-    </style>
 </head>
 <body>
 
@@ -342,7 +29,12 @@
     </div>
 
     <div class="background">
-        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
 
     <button id="topBtn">⬆</button>
@@ -361,7 +53,7 @@
     <section class="hero">
         <div class="hero-content">
             <h1>أفضل تطبيقات عبدالله</h1>
-            <p>متجر تطبيقات حديث وسريع وآمن مع تصميم احترافي.</p>
+            <p>متجر تطبيقات حديث وسريع وآمن مع تصميم احترافي متكامل.</p>
             <div class="hero-buttons">
                 <a href="#apps" class="btn-primary">استعراض التطبيقات</a>
                 <a href="#developer" class="btn-secondary">عن المطور</a>
@@ -371,21 +63,21 @@
 
     <section class="stats">
         <div class="stat-box">
-            <h2 id="appCount">5</h2>
-            <p>تطبيقات</p>
+            <h2 id="appCount">0</h2>
+            <p>تطبيقات متوفرة</p>
         </div>
         <div class="stat-box">
             <h2>100%</h2>
-            <p>مجاني</p>
+            <p>مجاني وآمن</p>
         </div>
         <div class="stat-box">
             <h2>2026</h2>
-            <p>آخر تحديث</p>
+            <p>آخر تحديث للمتجر</p>
         </div>
     </section>
 
     <section class="search-section">
-        <input type="text" id="search" placeholder="ابحث عن تطبيق...">
+        <input type="text" id="search" placeholder="ابحث عن تطبيق معين...">
     </section>
 
     <section id="featured" class="featured">
@@ -394,43 +86,56 @@
             <div class="featured-info">
                 <span class="featured-badge">⭐ التطبيق المميز</span>
                 <h2>WifiAnalyzer</h2>
-                <p>تحليل شبكات الواي فاي وعرض معلومات الشبكة بشكل احترافي.</p>
+                <p>تحليل شبكات الواي فاي وعرض معلومات وإشارات الشبكة المحيطة بك بشكل احترافي ومفصل.</p>
                 <a href="https://www.mediafire.com/file/r5xr1eg9iya4r19/WifiAnalyzer.apk/file" target="_blank" class="download-btn">تحميل الآن</a>
             </div>
         </div>
     </section>
 
     <section id="apps" class="apps">
+        
         <div class="app-card">
             <div class="badge new">NEW</div>
             <img src="./images/dailytasks.png" alt="DailyTasks" loading="lazy">
             <h2>DailyTasks</h2>
-            <p>إدارة المهام اليومية بسهولة وتنظيم الأعمال.</p>
-            <div class="app-info"><span>Version 1</span><span>عبدالله</span></div>
+            <p>إدارة المهام اليومية بسهولة وتنظيم الأعمال والواجبات بذكاء.</p>
+            <div class="app-info">
+                <span>الإصدار: v1.0</span>
+                <span>المطور: عبدالله</span>
+            </div>
             <a href="https://www.mediafire.com/file/o0tm3dq8w9d4ea6/DailyTasks.apk/file" target="_blank" class="download-btn">تحميل التطبيق</a>
         </div>
 
         <div class="app-card">
             <img src="./images/wifianalyzer.png" alt="WifiAnalyzer" loading="lazy">
             <h2>WifiAnalyzer</h2>
-            <p>تحليل الواي فاي وعرض معلومات الشبكة.</p>
-            <div class="app-info"><span>Version 1</span><span>عبدالله</span></div>
+            <p>تحليل الواي فاي وعرض معلومات الشبكة وقوة الإشارة وحمايتها.</p>
+            <div class="app-info">
+                <span>الإصدار: v1.0</span>
+                <span>المطور: عبدالله</span>
+            </div>
             <a href="https://www.mediafire.com/file/r5xr1eg9iya4r19/WifiAnalyzer.apk/file" target="_blank" class="download-btn">تحميل التطبيق</a>
         </div>
 
         <div class="app-card">
             <img src="./images/nexusquantum.png" alt="NexusQuantum" loading="lazy">
             <h2>NexusQuantum</h2>
-            <p>عرض معلومات البلوتوث والأجهزة المتصلة.</p>
-            <div class="app-info"><span>Version 1</span><span>عبدالله</span></div>
+            <p>فحص وعرض معلومات البلوتوث والأجهزة المتصلة والمحيطة بدقة.</p>
+            <div class="app-info">
+                <span>الإصدار: v1.0</span>
+                <span>المطور: عبدالله</span>
+            </div>
             <a href="https://www.mediafire.com/file/a0hyteykeagyn49/NexusQuantum.apk/file" target="_blank" class="download-btn">تحميل التطبيق</a>
         </div>
-
+        
         <div class="app-card">
             <img src="./images/nexuscoreinfo.png" alt="Nexus Core Info" loading="lazy">
             <h2>Nexus Core Info</h2>
-            <p>يعرض جميع معلومات الهاتف بالتفصيل الكامل.</p>
-            <div class="app-info"><span>Version 1</span><span>عبدالله</span></div>
+            <p>أداة متطورة تعرض جميع معلومات العتاد والقطع الداخلية للهاتف بالتفصيل الكامل.</p>
+            <div class="app-info">
+                <span>الإصدار: v1.0</span>
+                <span>المطور: عبدالله</span>
+            </div>
             <a href="https://www.mediafire.com/file/egikafw8wv7hy3s/Nexus+Core+Info.apk/file" target="_blank" class="download-btn">تحميل التطبيق</a>
         </div>
 
@@ -438,21 +143,25 @@
             <div class="badge pro">PRO</div>
             <img src="./images/zarchiver.png" alt="ZArchiver Pro" loading="lazy">
             <h2>ZArchiver Pro</h2>
-            <p>تطبيق مدفوع متوفر للتحميل مجاناً.</p>
-            <div class="app-info"><span>Version 1</span><span>عبدالله</span></div>
+            <p>تطبيق إدارة وضغط الملفات الشهير بنسخته المدفوعة والمميزة، متوفر للتحميل مجاناً.</p>
+            <div class="app-info">
+                <span>الإصدار: v1.0</span>
+                <span>المطور: عبدالله</span>
+            </div>
             <a href="https://www.mediafire.com/file/2n9j001scmztpwv/ZArchiver+Pro.apk/file" target="_blank" class="download-btn premium-btn">تحميل التطبيق</a>
         </div>
+
     </section>
 
     <section class="features">
         <h2 class="section-title">✨ مميزات الموقع</h2>
         <div class="features-grid">
-            <div class="feature-box">⚡<h3>سرعة عالية</h3><p>واجهة سريعة وخفيفة.</p></div>
-            <div class="feature-box">🔒<h3>تحميل آمن</h3><p>روابط تحميل مباشرة.</p></div>
-            <div class="feature-box">📱<h3>متوافق</h3><p>يعمل على جميع الأجهزة.</p></div>
-            <div class="feature-box">🎨<h3>تصميم عصري</h3><p>ألوان وتأثيرات حديثة.</p></div>
-            <div class="feature-box">🚀<h3>أداء ممتاز</h3><p>أنيميشن سلس واحترافي.</p></div>
-            <div class="feature-box">🌙<h3>واجهة مريحة</h3><p>ألوان مناسبة للعين.</p></div>
+            <div class="feature-box">⚡<h3>سرعة عالية</h3><p>واجهة متطورة وسريعة وخفيفة جداً في التصفح.</p></div>
+            <div class="feature-box">🔒<h3>تحميل آمن</h3><p>روابط تحميل مباشرة وفحص كامل ضد الفيروسات.</p></div>
+            <div class="feature-box">📱<h3>متوافق</h3><p>يعمل على جميع الشاشات وأجهزة الهواتف والتابلت.</p></div>
+            <div class="feature-box">🎨<h3>تصميم عصري</h3><p>ألوان وتأثيرات بصرية حديثة ومريحة للعين.</p></div>
+            <div class="feature-box">🚀<h3>أداء ممتاز</h3><p>أنيميشن حركي سلس جداً واحترافي عند تصفح العناصر.</p></div>
+            <div class="feature-box">🌙<h3>واجهة مريحة</h3><p>ثيم مظلم متناسق لحماية العين أثناء الاستخدام الليلي.</p></div>
         </div>
     </section>
 
@@ -461,7 +170,7 @@
         <div class="developer-card">
             <div class="developer-avatar">🚀</div>
             <h3>عبدالله</h3>
-            <p>مطور تطبيقات أندرويد ومشاريع تقنية.</p>
+            <p>مطور تطبيقات أندرويد ومصمم مشاريع ويب تقنية حديثة.</p>
             <div class="developer-links">
                 <div>🎮 Roblox: SAD_J82</div>
                 <div>📱 TikTok: dark4abod</div>
@@ -471,122 +180,20 @@
 
     <section class="updates">
         <h2 class="section-title">📢 آخر التحديثات</h2>
-        <div class="update-box">✅ إضافة DailyTasks</div>
-        <div class="update-box">✅ إضافة WifiAnalyzer</div>
-        <div class="update-box">✅ إضافة NexusQuantum</div>
-        <div class="update-box">✅ إضافة Nexus Core Info</div>
-        <div class="update-box">✅ إضافة ZArchiver Pro</div>
+        <div class="update-box">✅ إضافة تطبيق DailyTasks وإصلاح الأخطاء</div>
+        <div class="update-box">✅ إضافة أداة WifiAnalyzer لفحص الشبكات</div>
+        <div class="update-box">✅ إضافة تطبيق NexusQuantum للبلوتوث</div>
+        <div class="update-box">✅ إضافة تطبيق Nexus Core Info لمعلومات النظام</div>
+        <div class="update-box">✅ رفع النسخة المدفوعة من ZArchiver Pro مجاناً</div>
     </section>
 
     <footer>
         <h2>Abood Apps Store</h2>
         <p>جميع الحقوق محفوظة © <span id="year"></span></p>
-        <p>تم تطوير الموقع بواسطة عبدالله</p>
+        <p>تم تطوير وتصميم الموقع بواسطة عبدالله</p>
     </footer>
 
-    <script>
-        // --- شاشة الترحيب ---
-        window.addEventListener("load", () => {
-            setTimeout(() => {
-                const splash = document.getElementById("splash");
-                if (splash) {
-                    splash.style.opacity = "0";
-                    setTimeout(() => {
-                        splash.style.display = "none";
-                        splash.remove();
-                    }, 800);
-                }
-            }, 2200); // مدة عرض شاشة التحميل ممتدة لتتناسب مع الـ animation
-        });
-
-        // --- السنة التلقائية في الفوتر ---
-        const yearElement = document.getElementById("year");
-        if (yearElement) { yearElement.textContent = new Date().getFullYear(); }
-
-        // --- شريط التقدم العلوي ---
-        window.addEventListener("scroll", () => {
-            const winScroll = document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            const progress = document.getElementById("scrollProgress");
-            if (progress && height > 0) { progress.style.width = scrolled + "%"; }
-        });
-
-        // --- زر العودة للأعلى ---
-        const topBtn = document.getElementById("topBtn");
-        window.addEventListener("scroll", () => {
-            if (!topBtn) return;
-            if (window.scrollY > 300) { topBtn.style.display = "block"; } 
-            else { topBtn.style.display = "none"; }
-        });
-
-        if (topBtn) {
-            topBtn.addEventListener("click", () => {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            });
-        }
-
-        // --- نظام البحث الذكي عن التطبيقات ---
-        const search = document.getElementById("search");
-        if (search) {
-            search.addEventListener("input", () => {
-                const value = search.value.toLowerCase().trim();
-                document.querySelectorAll(".app-card").forEach(card => {
-                    const text = card.innerText.toLowerCase();
-                    card.style.display = text.includes(value) ? "flex" : "none";
-                });
-            });
-        }
-
-        // --- أنيميشن ظهور العناصر عند السكرول ---
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform = "translateY(0px)";
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll(".app-card, .feature-box, .stat-box, .update-box, .developer-card, .featured-card").forEach(item => {
-            item.style.opacity = "0";
-            item.style.transform = "translateY(30px)";
-            item.style.transition = "0.6s ease-out";
-            observer.observe(item);
-        });
-
-        // --- عداد تحميلات التطبيقات المحلي ---
-        document.querySelectorAll(".app-card .download-btn").forEach((btn, index) => {
-            const key = "app_downloads_" + index;
-            let count = localStorage.getItem(key) || 0;
-
-            const counter = document.createElement("div");
-            counter.className = "download-counter";
-            counter.innerHTML = "⬇ التحميلات: " + count;
-            counter.style.marginTop = "12px";
-            counter.style.fontSize = "13px";
-            counter.style.opacity = "0.8";
-            btn.parentElement.appendChild(counter);
-
-            btn.addEventListener("click", () => {
-                count++;
-                localStorage.setItem(key, count);
-                counter.innerHTML = "⬇ التحميلات: " + count;
-            });
-        });
-
-        // --- استبدال الصور التالفة تلقائياً برابط احتياطي ---
-        document.querySelectorAll("img").forEach(img => {
-            img.onerror = function() {
-                this.src = "https://via.placeholder.com/512x512?text=App";
-            };
-        });
-
-        // --- عداد الزيارات المحلي في الكونسول ---
-        let visits = localStorage.getItem("abood_visits") || 0;
-        visits++;
-        localStorage.setItem("abood_visits", visits);
-        console.log("🚀 Welcome To Abood Apps Store! Visitors:", visits);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
+
