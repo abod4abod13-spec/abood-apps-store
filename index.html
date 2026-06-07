@@ -1,76 +1,321 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Abood Apps Store</title>
+
+<meta name="description" content="متجر تطبيقات عبود الرسمي">
+
 <link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-<div class="bg"></div>
+<!-- شاشة الترحيب -->
+
+<div id="splash">
+
+<div class="logo-container">
+
+<div class="logo-glow"></div>
+
+<h1>Abood Apps</h1>
+
+<p>تحميل التطبيقات بأحدث إصدار</p>
+
+</div>
+
+</div>
+
+<!-- خلفية متحركة -->
+
+<div class="animated-bg">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<!-- زر العودة للأعلى -->
+
+<button id="topBtn">
+↑
+</button>
+
+<!-- الهيدر -->
 
 <header>
-<h1>Abood Apps Store</h1>
-<p>المطور: عبدالله | Roblox: SAD_J82 | TikTok: dark4abod</p>
 
-<input type="text" id="search" placeholder="ابحث عن تطبيق...">
+<h1 class="main-title">
+🚀 Abood Apps Store
+</h1>
+
+<p class="subtitle">
+أفضل تطبيقات المطور عبدالله
+</p>
+
+<div class="developer-box">
+
+<div>
+👨‍💻 المطور: عبدالله
+</div>
+
+<div>
+🎮 Roblox: SAD_J82
+</div>
+
+<div>
+📱 TikTok: dark4abod
+</div>
+
+</div>
+
 </header>
 
-<div class="apps">
+<!-- البحث -->
+
+<section class="search-section">
+
+<input
+type="text"
+id="search"
+placeholder="ابحث عن تطبيق..."
+>
+
+</section>
+
+<!-- إحصائيات -->
+
+<section class="stats">
+
+<div class="stat-card">
+📦
+<span id="appCount">
+5
+</span>
+تطبيقات
+</div>
+
+<div class="stat-card">
+⚡
+أحدث إصدار
+</div>
+
+<div class="stat-card">
+🔥
+تصميم احترافي
+</div>
+
+</section>
+
+<!-- التطبيقات -->
+
+<section class="apps">
+
+<!-- DailyTasks -->
 
 <div class="card">
-<img src="images/dailytasks.png">
+
+<div class="badge">
+NEW
+</div>
+
+<img
+src="./images/dailytasks.png"
+alt="DailyTasks"
+loading="lazy"
+>
+
 <h2>DailyTasks</h2>
-<p>إدارة المهام اليومية</p>
-<p>Version 1</p>
-<a href="https://www.mediafire.com/file/o0tm3dq8w9d4ea6/DailyTasks.apk/file" target="_blank">
-<button>تحميل</button>
-</a>
+
+<p class="desc">
+إدارة المهام اليومية بسهولة وتنظيم الأعمال.
+</p>
+
+<div class="info">
+
+<span>الإصدار: 1</span>
+
+<span>المطور: عبدالله</span>
+
 </div>
 
+<a
+href="https://www.mediafire.com/file/o0tm3dq8w9d4ea6/DailyTasks.apk/file"
+target="_blank"
+class="download-btn"
+>
+تحميل التطبيق
+</a>
+
+</div>
+
+<!-- WifiAnalyzer -->
+
 <div class="card">
-<img src="images/wifianalyzer.png">
+
+<img
+src="./images/wifianalyzer.png"
+alt="WifiAnalyzer"
+loading="lazy"
+>
+
 <h2>WifiAnalyzer</h2>
-<p>تحليل الواي فاي</p>
-<p>Version 1</p>
-<a href="https://www.mediafire.com/file/r5xr1eg9iya4r19/WifiAnalyzer.apk/file" target="_blank">
-<button>تحميل</button>
-</a>
+
+<p class="desc">
+تحليل شبكات الواي فاي وعرض معلومات الشبكة.
+</p>
+
+<div class="info">
+
+<span>الإصدار: 1</span>
+
+<span>المطور: عبدالله</span>
+
 </div>
 
+<a
+href="https://www.mediafire.com/file/r5xr1eg9iya4r19/WifiAnalyzer.apk/file"
+target="_blank"
+class="download-btn"
+>
+تحميل التطبيق
+</a>
+
+</div>
+
+<!-- NexusQuantum -->
+
 <div class="card">
-<img src="images/nexusquantum.png">
+
+<img
+src="./images/nexusquantum.png"
+alt="NexusQuantum"
+loading="lazy"
+>
+
 <h2>NexusQuantum</h2>
-<p>معلومات البلوتوث والأجهزة المتصلة</p>
-<p>Version 1</p>
-<a href="https://www.mediafire.com/file/a0hyteykeagyn49/NexusQuantum.apk/file" target="_blank">
-<button>تحميل</button>
-</a>
+
+<p class="desc">
+عرض معلومات البلوتوث والأجهزة المتصلة والبطارية.
+</p>
+
+<div class="info">
+
+<span>الإصدار: 1</span>
+
+<span>المطور: عبدالله</span>
+
 </div>
 
-<div class="card">
-<img src="images/zarchiver.png">
-<h2>ZArchiver Pro</h2>
-<p>مدفوع مجاناً للتحميل</p>
-<p>Version 1</p>
-<a href="https://www.mediafire.com/file/2n9j001scmztpwv/ZArchiver+Pro.apk/file" target="_blank">
-<button>تحميل</button>
+<a
+href="https://www.mediafire.com/file/a0hyteykeagyn49/NexusQuantum.apk/file"
+target="_blank"
+class="download-btn"
+>
+تحميل التطبيق
 </a>
+
 </div>
 
+<!-- Nexus Core Info -->
+
 <div class="card">
-<img src="images/nexuscoreinfo.png">
+
+<img
+src="./images/nexuscoreinfo.png"
+alt="Nexus Core Info"
+loading="lazy"
+>
+
 <h2>Nexus Core Info</h2>
-<p>يعرض معلومات الهاتف بالتفصيل</p>
-<p>Version 1</p>
-<a href="https://www.mediafire.com/file/egikafw8wv7hy3s/Nexus+Core+Info.apk/file" target="_blank">
-<button>تحميل</button>
-</a>
-</div>
+
+<p class="desc">
+عرض معلومات الهاتف بالتفصيل الكامل.
+</p>
+
+<div class="info">
+
+<span>الإصدار: 1</span>
+
+<span>المطور: عبدالله</span>
 
 </div>
+
+<a
+href="https://www.mediafire.com/file/egikafw8wv7hy3s/Nexus+Core+Info.apk/file"
+target="_blank"
+class="download-btn"
+>
+تحميل التطبيق
+</a>
+
+</div>
+
+<!-- ZArchiver -->
+
+<div class="card premium">
+
+<div class="badge premium-badge">
+PRO
+</div>
+
+<img
+src="./images/zarchiver.png"
+alt="ZArchiver Pro"
+loading="lazy"
+>
+
+<h2>ZArchiver Pro</h2>
+
+<p class="desc">
+تطبيق مدفوع متاح للتحميل مجاناً.
+</p>
+
+<div class="info">
+
+<span>الإصدار: 1</span>
+
+<span>المطور: عبدالله</span>
+
+</div>
+
+<a
+href="https://www.mediafire.com/file/2n9j001scmztpwv/ZArchiver+Pro.apk/file"
+target="_blank"
+class="download-btn"
+>
+تحميل التطبيق
+</a>
+
+</div>
+
+</section>
+
+<!-- الفوتر -->
+
+<footer>
+
+<h3>Abood Apps Store</h3>
+
+<p>
+جميع الحقوق محفوظة ©
+<span id="year"></span>
+</p>
+
+</footer>
 
 <script src="script.js"></script>
+
 </body>
-</html>
+
+  </html>
